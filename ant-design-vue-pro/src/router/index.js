@@ -10,7 +10,7 @@ const routes = [
   { // 有关登录注册的路由
     path: "/user",
     component: () =>
-     import(/* webpackChunkName: "layout" */ "../layouts/UserLayout"), // 提供登录注册的基础页面但是默认会走登录
+     import(/* webpackChunkName: "layout" */ "../layouts/UserLayout"), // 提供登录注册的基础页面(router-view主要是)但是默认会走登录
     children: [
       {
         path: "/user",
@@ -111,7 +111,9 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => { // 路由守卫开启动画
-  Nprogress.start();
+  if (to.path !== from.path) {
+    Nprogress.start();
+  }
   next();
 });
 
