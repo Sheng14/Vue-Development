@@ -3,6 +3,8 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import { Button, Layout, Icon, Drawer, Radio, Menu } from "ant-design-vue";
+import Auth from './directive/auth';
+import Authorized from './components/Authorized';
 // import antd from "ant-design-vue";
 // import "ant-design-vue/dist/antd.less";
 
@@ -13,6 +15,8 @@ Vue.use(Icon);
 Vue.use(Drawer);
 Vue.use(Radio);
 Vue.use(Menu);
+Vue.use(Auth); // 指令可以use注册
+Vue.component('Authorized', Authorized); // 组件则全局注册比较方便
 // Vue.use(antd);
 
 new Vue({

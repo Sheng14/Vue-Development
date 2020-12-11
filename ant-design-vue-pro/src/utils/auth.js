@@ -1,5 +1,5 @@
 export function getCurrentAuthority () { // 获取当前用户权限（后端给的，这个时候就是模拟一下）
-    return ['user'];
+    return ['admin'];
 }
 
 export function check (authority) { // 利用传入的权限组对当前权限进行校验

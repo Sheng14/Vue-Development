@@ -8,6 +8,7 @@
     <a-layout>
       <a-layout-header style="background: #fff; padding: 0">
       <a-icon
+        v-auth="['admin']"
         class="trigger"
         :type="collapsed ? 'menu-fold': 'menu-unfold'"
         @click="collapsed = !collapsed"
@@ -22,7 +23,9 @@
       </a-layout-footer>
     </a-layout>
   </a-layout>
-  <SettingDrawer />
+  <Authorized :authority="['admin']">
+    <SettingDrawer />
+  </Authorized>
 </div>
 </template>
 
@@ -31,6 +34,7 @@ import SliderMenu from './SliderMenu.vue';
 import Header from './Header';
 import Footer from './Footer';
 import SettingDrawer from '../components/SettingDrawer/index';
+import Authorized from '../components/Authorized.vue';
 export default {
     data() {
         return {
@@ -41,7 +45,8 @@ export default {
         Header,
         Footer,
         SliderMenu,
-        SettingDrawer
+        SettingDrawer,
+        Authorized
     },
     computed: {
         navTheme () {
