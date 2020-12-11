@@ -1,8 +1,12 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+import { findLast } from 'lodash';
+import { notification } from 'ant-design-vue';
 import Nprogress from "nprogress";
 import "nprogress/nprogress.css";
 import NotFound from "../views/404.vue";
+import Forbidden from "../views/403.vue";
+import { check, isLogin } from "../utils/auth";
 
 Vue.use(VueRouter);
 
@@ -33,6 +37,7 @@ const routes = [
   },
   { // 直接输入8080走的正常首页（定位到分析那里）
     path: "/",
+    meta: { authority: ['user', 'admin'] }, // 添加权限标识，即允许访问权限组
     component: () => 
       import(/* webpackChunkName: "layout" */ "../layouts/BasicLayout"),
     children: [
@@ -43,7 +48,7 @@ const routes = [
       {
         path: "/dashborad",
         name: "dashboard",
-        meta: { icon: "dashboard", title: "仪表盘" }, // 存放路由代表的文字信息和图标
+        meta: { icon: "dashboard", title: "仪表盘", authority: ['admin'] }, // 存放路由代表的文字信息和图标
         component: { render: h => h("router-view") },
         children: [
           {
@@ -104,6 +109,12 @@ const routes = [
       }
     ]
   },
+  { // 无权限走这里
+    path: "/403",
+    hideInMenu: true, // 标志位表示不需要展示这个路由到菜单
+    name: "403",
+    component: Forbidden
+  },
   { // 都配不上是走这个404
     path: "*",
     hideInMenu: true, // 标志位表示不需要展示这个路由到菜单
@@ -118,9 +129,26 @@ const router = new VueRouter({
   routes
 });
 
-router.beforeEach((to, from, next) => { // 路由守卫开启动画
+router.beforeEach((to, from, next) => { // 路由守卫开启动画和权限检测
   if (to.path !== from.path) {
     Nprogress.start();
+  }
+  const record = findLast(to.matched, record => record.meta.authority); // 获取当前路径最近的一个路由的信息
+  if (record && !check(record.meta.authority)) { // 路由信息存在且无权限
+    if (!isLogin && to.path !=="/user/login") { // 未登录且不是在登录页
+      next({
+        path: "/user/login"
+      });
+    } else if (to.path !== "/403") { // 已经登录但是无权限
+      notification.error({
+        message: '403',
+        description: "请联系管理员获取权限"
+      });
+      next({
+        path: "/403"
+      });
+    }
+    Nprogress.done(); // 需要在这里关闭路由跳转的动画因为没有执行到next无法走关闭动画路线
   }
   next();
 });
