@@ -3,7 +3,7 @@
   <a-layout id="components-layout-demo-side" style="min-height: 100vh">
     <a-layout-sider v-model="collapsed" collapsible :trigger=null :theme="navTheme" v-if="navLayout === 'left'">
       <div class="logo">Ant Design Pro</div>
-      <SliderMenu />
+      <SliderMenu :theme="navTheme" />
     </a-layout-sider>
     <a-layout>
       <a-layout-header style="background: #fff; padding: 0">
