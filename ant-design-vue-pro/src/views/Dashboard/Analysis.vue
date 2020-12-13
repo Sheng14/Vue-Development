@@ -1,10 +1,48 @@
 <template>
-  <div>Analysis</div>
+  <div>
+    Analysis
+    <Chart :option="chartOption" style="height: 400px;"></Chart>
+  </div>
 </template>
 
 <script>
+import random from 'lodash/random' //引入随机数处理函数
+import Chart from '../../components/Chart.vue' // 引入图表组件
 export default {
-
+  data () {
+    return {
+      chartOption: { // 定义给图表的数据
+        title: {
+            text: 'ECharts 入门示例'
+        },
+        tooltip: {},
+        legend: {
+            data:['销量']
+        },
+        xAxis: {
+            data: ["衬衫","羊毛衫","雪纺衫","裤子","高跟鞋","袜子"]
+        },
+        yAxis: {},
+        series: [{
+          name: '销量',
+          type: 'bar',
+          data: [5, 20, 36, 10, 10, 20]
+        }]  
+      }
+    }
+  },
+  components: {  
+    Chart
+  },
+  mounted () { // 建立一个定时器，不断修改其中的值，重新赋值假装改变其结构才能触发子组件的watcher
+    this.interval = setInterval(() => {
+      this.chartOption.series[0].data = this.chartOption.series[0].data.map(()=>random(100)) // 改变值可以被深度监听到
+      this.chartOption = {...this.chartOption} // 重新赋值假装改变了结构可以直接被监听到
+    }, 3000)
+  },
+  beforeDestroy () { // 关闭的时候记得销毁定时器！
+    clearInterval(this.interval)
+  }
 }
 </script>
 
