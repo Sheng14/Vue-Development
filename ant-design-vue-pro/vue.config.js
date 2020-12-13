@@ -14,7 +14,7 @@ module.exports = {
               if (req.headers.accept.indexOf('html') !== -1) {
                 console.log('Skipping proxy for browser request.');
                 return '/index.html';
-              } else {
+              } else if (process.env.MOCK !== "none") { // 确保mock存在且要调用才走mock路径
                   const name = req.path.split("/api/")[1].split("/").join("_"); // 拿到请求路径对应的文件名
                   const mock = require(`./mock/${name}`); // 根据文件名引入拿到对应的mock文件
                   const result = mock(req.method); // 往mock文件里面传方法参数拿到返回值

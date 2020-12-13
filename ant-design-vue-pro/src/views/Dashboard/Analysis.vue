@@ -8,7 +8,8 @@
 <script>
 // import random from 'lodash/random' //引入随机数处理函数
 import Chart from '../../components/Chart.vue' // 引入图表组件
-import axios from 'axios'
+import request from '../../utils/request' // 引入二次封装的axios请求方法
+// import axios from 'axios'
 export default {
   data () {
     return {
@@ -20,8 +21,14 @@ export default {
   },
   methods: {
     getChartData () { // 请求mock中的图表数据
-      axios.get('/api/dashboard/chart', { params: { ID: 12345 } })
-        .then((res) => {
+     // axios.get('/api/dashboard/chart', { params: { ID: 12345 } })
+      request({
+        url: "/api/dashboard/chart",
+        method: "get",
+        params: {
+          ID: 12345
+        }
+      }).then((res) => {
           this.chartOption = {
             title: {
                 text: 'ECharts 入门示例'
@@ -52,7 +59,9 @@ export default {
     }, 3000)
   },
   beforeDestroy () { // 关闭的时候记得销毁定时器！
+    console.log(11)
     clearInterval(this.interval)
+    this.interval = null
   }
 }
 </script>
