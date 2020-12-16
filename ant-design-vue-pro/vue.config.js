@@ -2,8 +2,11 @@ module.exports = {
     css: {
         loaderOptions: {
             less: {
+                modifyVars: {// 包含需要修改的主题样式变量
+                  'primary-color': '#1DA57A'
+                },
                 javascriptEnabled: true
-            }
+            } 
         }
     },
     chainWebpack: config => { // 修改.svg文件的解析方式（url字符串 -----> 函数式组件）

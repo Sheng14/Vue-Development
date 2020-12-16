@@ -1,6 +1,6 @@
 <template>
 <div :class="[`nav-theme-${navTheme}`, `nav-layout-${navLayout}`]">
-  <a-layout id="components-layout-demo-side" style="min-height: 100vh">
+  <a-layout class="components-layout-demo-side" style="min-height: 100vh">
     <a-layout-sider v-model="collapsed" collapsible :trigger=null :theme="navTheme" v-if="navLayout === 'left'">
       <div class="logo">Ant Design Pro</div>
       <SliderMenu :theme="navTheme" />
@@ -60,6 +60,9 @@ export default {
 </script>
 
 <style scoped>
+.components-layout-demo-side >>> .ant-menu-dark .ant-menu-item-selected {
+  color: darkseagreen;
+}
 .trigger {
     padding: 0 20px;
     line-height: 64px;
