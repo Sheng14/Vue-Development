@@ -22,6 +22,11 @@ Vue.use(Auth); // 指令可以use注册
 Vue.component('Authorized', Authorized); // 组件则全局注册比较方便
 // Vue.use(antd);
 
+const IconFont = Icon.createFromIconfontCN({
+  scriptUrl: '//at.alicdn.com/t/font_2273479_4z4cywcvyvv.js', // 在阿里巴巴那里生成的在线链接
+});
+Vue.component('IconFont', IconFont); // 全局注册引入字体图标标签
+
 new Vue({
   router,
   store,
