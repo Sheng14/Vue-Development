@@ -3,6 +3,7 @@
     {{$t('message')['app.dashboard.analysis.timeLabel']}}: 
     <a-date-picker></a-date-picker>
     <Chart :option="chartOption" style="height: 400px;"></Chart>
+    <pre v-highlightjs="chartCode"><code class="html"></code></pre>
   </div>
 </template>
 
@@ -11,10 +12,12 @@
 import Chart from '../../components/Chart.vue' // 引入图表组件
 import request from '../../utils/request' // 引入二次封装的axios请求方法
 // import axios from 'axios'
+import chartCode from '!!raw-loader!../../components/Chart.vue' // 以不走vue-loader走raw-loader的方式加载chart组件的代码
 export default {
   data () {
     return {
-      chartOption: {}  // 定义给图表的数据
+      chartOption: {},  // 定义给图表的数据
+      chartCode // chart组件中的所有代码
     }
   },
   components: {  

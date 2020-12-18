@@ -9,6 +9,8 @@ import VueI18n from 'vue-i18n';
 import enUS from './locale/en_US';
 import zhCN from './locale/zh_CN';
 import queryString from 'query-string';
+import VueHighlightJS from 'vue-highlightjs';
+import 'highlight.js/styles/github.css'; // 引入高亮代码需要的插件和对应样式
 // import antd from "ant-design-vue";
 // import "ant-design-vue/dist/antd.less";
 
@@ -29,6 +31,7 @@ Vue.use(ConfigProvider);
 Vue.use(Auth); // 指令可以use注册
 Vue.component('Authorized', Authorized); // 组件则全局注册比较方便
 Vue.use(VueI18n);
+Vue.use(VueHighlightJS);
 // Vue.use(antd);
 
 const IconFont = Icon.createFromIconfontCN({
