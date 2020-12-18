@@ -1,3 +1,5 @@
+const webpack = require('webpack');
+const path = require('path');
 module.exports = {
     css: {
         loaderOptions: {
@@ -6,9 +8,18 @@ module.exports = {
                   'primary-color': '#1DA57A'
                 },
                 javascriptEnabled: true
-            } 
-        }
+            }
+        },
+        extract: false // 不加会报css依赖错误
     },
+    configureWebpack: {
+      plugins: [new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)], // 忽略moment的其它包
+      resolve: {
+        alias: {
+          "@ant-design/icons/lib/dist$": path.resolve(__dirname, "./src/icon.js") // 配置图标文件的别名指向我们新建的icon.js（代原图标路径）
+        }
+      }
+    },    
     chainWebpack: config => { // 修改.svg文件的解析方式（url字符串 -----> 函数式组件）
       const svgRule = config.module.rule('svg')
   

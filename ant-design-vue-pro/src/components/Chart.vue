@@ -8,7 +8,12 @@ import echarts from 'echarts'; 直接import会报init是undefined的错！！！
 Error in mounted hook: "TypeError: Cannot read property 'init' of undefined"
 TypeError: Cannot read property 'init' of undefined
 */
-let echarts = require('echarts'); // 必须以这种方式导入echarts
+// let echarts = require('echarts'); // 必须以这种方式导入echarts
+// 按需加载引入：
+import echarts from "echarts/lib/echarts"; // 引入echarts的核心代码
+import "echarts/lib/chart/bar"; // 引入柱状图
+import "echarts/lib/component/title"; // 引入title
+
 import { addListener, removeListener } from 'resize-detector'; // 引入监听容器变化的函数
 import debounce from 'lodash/debounce'; // 引入防抖函数
 export default { 

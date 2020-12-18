@@ -10,6 +10,7 @@
 import zhCN from "ant-design-vue/lib/locale-provider/zh_CN";
 import enUS from "ant-design-vue/lib/locale-provider/en_US"; // 引入语言包
 import moment from 'moment'; // 引入第三方库
+import "moment/locale/zh-cn"; // 按需单独引入moment的中文包
 export default {
   data () {
     return {
